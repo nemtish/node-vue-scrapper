@@ -2,4 +2,4 @@ src/node_modules
 .DS_Store
 dist
 *.local
-.env
+.envnode_modules
