@@ -6,7 +6,7 @@ import apiRouter from "./routes/api.routes.config";
 import { loginErrorHandler } from "./middlewares/apiErrorHandler";
 
 const app: express.Application = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const debugLog: debug.IDebugger = debug("app");
 
 app.use(express.json());
