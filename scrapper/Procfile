@@ -1,1 +1,1 @@
-scrapper: npm run build
+web:npm run build --workspace=scrapper
