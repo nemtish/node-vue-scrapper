@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.VITE_APP_API_BASE_URL,
+  baseURL:
+    process.env.VITE_APP_API_BASE_URL ||
+    "https://economist-scrapper-api.herokuapp.com/api",
   timeout: 1000,
 });
 
