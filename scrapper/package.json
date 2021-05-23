@@ -2,6 +2,9 @@
   "name": "mistho-assignment",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "start": "nodemon src/app.ts",
     "build": "tsc && node ./dist/app.js",

@@ -1,6 +1,7 @@
-src/node_modules
+node_modules
 .DS_Store
 dist
 *.local
-.envnode_modules
+.env
+node_modules
 npm-debug.log
