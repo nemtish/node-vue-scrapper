@@ -6,7 +6,8 @@
     "node": "12.x"
   },
   "scripts": {
-    "start": "nodemon src/app.ts",
+    "start": "node dist/app.js",
+    "dev:start": "nodemon src/app.ts",
     "build": "tsc",
     "debug": "export DEBUG=* && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
