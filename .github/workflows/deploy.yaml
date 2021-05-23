@@ -13,6 +13,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "economist-scrapper-api"
           heroku_email: ${{secrets.HEROKU_API_KEY}}
+          appdir: "scrapper"
         env:
           HD_APP_BASE: "scrapper"
       - name: Release Web Client
@@ -21,5 +22,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "economist-scrapper"
           heroku_email: ${{secrets.HEROKU_API_KEY}}
+          appdir: "client"
         env:
           HD_APP_BASE: "client"
