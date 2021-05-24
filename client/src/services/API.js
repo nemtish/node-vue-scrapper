@@ -24,7 +24,13 @@ const API = (() => {
       return instance.get(url, { params: reqParams }).then((resp) => resp.data);
     },
     post: async (url, payload) => {
-      return await instance.post(url, { ...payload });
+      try {
+        return await instance.post(url, { ...payload });
+      } catch (e) {
+        if (e.response) {
+          throw new Error(e.response.data.error);
+        }
+      }
     },
     authenticate: async (url, { email, password }) => {
       try {

@@ -2,6 +2,7 @@
   <div class="box">
     <div class="inner-box">
       <div class="box-card">
+        <span v-if="errorMessage" class="red">{{ errorMessage }}</span>
         <email-field v-model="user.email" />
         <password-field v-model="user.password" />
         <main-button buttonText="Sign up" @click-handler="signup" />
@@ -23,6 +24,7 @@ export default {
   setup() {
     const router = useRouter();
     const { errors } = useFormValidation();
+    const errorMessage = ref("");
     const user = reactive({
       email: "",
       password: "",
@@ -36,16 +38,15 @@ export default {
           password: user.password,
         });
         router.push({ name: "Login" });
-        r;
       } catch (e) {
-        console.error(e.message);
+        errorMessage.value = e.message;
       }
     };
 
     return {
       user,
       signup,
-      test,
+      errorMessage,
     };
   },
 };
