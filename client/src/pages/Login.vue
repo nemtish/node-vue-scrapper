@@ -1,18 +1,17 @@
 <template>
   <div class="box">
-    <p v-if="errorMessage" class="red">{{ errorMessage }}</p>
     <div class="inner-box">
       <div class="box-card">
-        <input-field label="Username" placeholder="Email" v-model="email" />
-        <input-field
-          label="Password"
-          inputType="password"
-          placeholder="Password"
-          v-model="password"
-        />
+        <span v-if="errorMessage" class="red">{{ errorMessage }}</span>
+        <email-field v-model="email" />
+        <password-field v-model="password" />
 
         <div class="button-box">
-          <main-button buttonText="Login" @click-handler="login" />
+          <main-button
+            buttonText="Login"
+            @click-handler="login"
+            :disabled="!email || !password"
+          />
           <main-button
             buttonText="Sign up"
             @click-handler.native="router.push({ name: 'Signup' })"
@@ -27,29 +26,31 @@
 import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import API from "../services/API";
-import InputField from "../components/InputField.vue";
+import EmailField from "../components/EmailField.vue";
+import PasswordField from "../components/PasswordField.vue";
 import MainButton from "../components/MainButton.vue";
+import useFormValidation from "../modules/useFormValidation";
 
 export default {
-  components: { InputField, MainButton },
-  setup(props) {
+  components: { EmailField, PasswordField, MainButton },
+  setup() {
     const email = ref("");
     const password = ref("");
     const errorMessage = ref("");
     const router = useRouter();
+    const { errors } = useFormValidation();
 
     const login = async () => {
+      if (errors && (errors.email || errors.password)) return;
       try {
-        const user = await API.authenticate("/user/login", {
+        await API.authenticate("/user/login", {
           email: email.value,
           password: password.value,
         });
 
         router.push("/");
       } catch (e) {
-        // not working for some strange reason
         errorMessage.value = e.message;
-        alert(e.message);
       }
     };
 

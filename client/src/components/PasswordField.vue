@@ -9,7 +9,7 @@
       @blur="validate"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-    <div>{{ errors.password }}</div>
+    <span class="red">{{ errors.password }}</span>
   </div>
 </template>
 

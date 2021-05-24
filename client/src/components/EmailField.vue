@@ -9,7 +9,7 @@
       @blur="validate"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-    <div>{{ errors.email }}</div>
+    <span class="red">{{ errors.email }}</span>
   </div>
 </template>
 
@@ -24,7 +24,6 @@ export default {
     let { validateEmailField, errors } = useFormValidation();
     const validate = () => {
       validateEmailField("email", input.value);
-      console.log("validate", errors.email);
     };
 
     return { validate, input, errors };

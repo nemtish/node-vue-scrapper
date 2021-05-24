@@ -5,7 +5,6 @@
         <email-field v-model="user.email" />
         <password-field v-model="user.password" />
         <main-button buttonText="Sign up" @click-handler="signup" />
-        <span v-if="test">{{ test }} </span>
       </div>
     </div>
   </div>
@@ -17,22 +16,22 @@ import { useRouter } from "vue-router";
 import API from "../services/API";
 import EmailField from "../components/EmailField.vue";
 import PasswordField from "../components/PasswordField.vue";
-import InputField from "../components/InputField.vue";
 import MainButton from "../components/MainButton.vue";
+import useFormValidation from "../modules/useFormValidation";
 export default {
-  components: { EmailField, PasswordField, InputField, MainButton },
+  components: { EmailField, PasswordField, MainButton },
   setup() {
     const router = useRouter();
-    let test = ref("");
+    const { errors } = useFormValidation();
     const user = reactive({
       email: "",
       password: "",
-      confirmPassword: "",
     });
 
     const signup = async () => {
       try {
-        const savedUser = await API.post("/user/register", {
+        if (errors && (errors.email || errors.password)) return;
+        await API.post("/user/register", {
           email: user.email,
           password: user.password,
         });

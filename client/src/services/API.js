@@ -32,7 +32,9 @@ const API = (() => {
         const token = `Bearer ${response.data.payload.token}`;
         localStorage.setItem("authToken", token);
       } catch (e) {
-        throw new Error(e.response.data.error);
+        if (e.response) {
+          throw new Error(e.response.data.error);
+        }
       }
     },
   };
