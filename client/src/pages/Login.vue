@@ -50,7 +50,7 @@ export default {
 
         router.push("/");
       } catch (e) {
-        errorMessage.value = e.message;
+        errorMessage.value = e;
       }
     };
 
