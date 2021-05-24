@@ -38,10 +38,10 @@ export default {
     });
 
     const getArticles = async (category) => {
-      // showArticleList.value = false;
+      showArticleList.value = false;
       const resp = await getArticlesByCategory(category);
       articles.value = resp.payload;
-      // showArticleList.value = true;
+      showArticleList.value = true;
     };
 
     const handleArticleClick = (articleUrl) => {
