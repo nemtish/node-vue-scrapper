@@ -25,4 +25,4 @@ jobs:
           appdir: "client"
         env:
           HD_APP_BASE: "client"
-          HD_VUE_APP_API_BASE_URL: "https://economist-scrapper-api.herokuapp.com/api"
+          HD_VITE_APP_API_BASE_URL: "https://economist-scrapper-api.herokuapp.com/api"
