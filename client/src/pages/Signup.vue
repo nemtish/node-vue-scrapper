@@ -33,13 +33,14 @@ export default {
     const signup = async () => {
       try {
         if (errors && (errors.email || errors.password)) return;
+
         await API.post("/user/register", {
           email: user.email,
           password: user.password,
         });
         router.push({ name: "Login" });
       } catch (e) {
-        errorMessage.value = e.message;
+        errorMessage.value = e;
       }
     };
 

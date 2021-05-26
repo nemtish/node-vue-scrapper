@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_APP_API_BASE_URL,
-  timeout: 1000,
+  timeout: 2000,
 });
 
 instance.interceptors.request.use((config) => {
@@ -49,20 +49,12 @@ const API = (() => {
       return instance.get(url, { params: reqParams }).then((resp) => resp.data);
     },
     post: async (url, payload) => {
-      try {
-        return await instance.post(url, { ...payload });
-      } catch (e) {
-        throw new Error(e);
-      }
+      return instance.post(url, { ...payload });
     },
     authenticate: async (url, { email, password }) => {
-      try {
-        const response = await API.post(url, { email, password });
-        const token = `Bearer ${response.data.payload.token}`;
-        localStorage.setItem("authToken", token);
-      } catch (e) {
-        throw new Error(e);
-      }
+      const response = await API.post(url, { email, password });
+      const token = `Bearer ${response.data.payload.token}`;
+      localStorage.setItem("authToken", token);
     },
   };
 })();
