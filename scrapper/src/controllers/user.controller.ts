@@ -1,17 +1,20 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import debug from "debug";
-import jwt from "jsonwebtoken";
-import config from "../config";
 import {
   userStorage,
   saveUser,
   findUserByEmail,
+  authorize,
 } from "../services/user.service";
 
 const debugLog: debug.IDebugger = debug("user.controller");
 
 export default () => {
-  const register = (req: express.Request, res: express.Response) => {
+  const register = (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
     try {
       const user = saveUser(req.body);
       debugLog(userStorage);
@@ -24,35 +27,35 @@ export default () => {
       res.status(401).send({ error: e.message });
     }
   };
-  const login = (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
+  const login = (req: express.Request, res: express.Response) => {
     debugLog(req.body);
-    const { email, password } = req.body;
 
-    const user = findUserByEmail(email);
-    if (user && user.comparePassword(password)) {
-      let payload = { id: "qwqe" || 0 };
-      const token = jwt.sign(payload, config.TOKEN_SECRET);
+    try {
+      const { email } = req.body;
+      const token = authorize(req.body);
 
       res.status(200).json({
         success: true,
         message: "User login successfully",
         payload: { email: email, token: token },
       });
-    } else {
-      res.status(401).send({ error: "Wrong email / password" });
+    } catch (e) {
+      res.status(401).send({ error: e.message });
     }
   };
   const authenticate = (req: express.Request, res: express.Response) => {
     debugLog(req.query.email);
-    res.json({
-      success: true,
-      message: "Authorized user",
-      payload: { user: "ID" },
-    });
+    const { email } = req.query;
+    try {
+      const user = findUserByEmail(<string>email);
+      res.json({
+        success: true,
+        message: "Authorized user",
+        payload: { user: user.id },
+      });
+    } catch (e) {
+      res.status(400).send({ error: e.message });
+    }
   };
 
   return {

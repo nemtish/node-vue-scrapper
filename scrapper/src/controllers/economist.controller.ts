@@ -1,6 +1,6 @@
 import express from "express";
 import debug from "debug";
-import scrapper from "../services/scrapper";
+import scrapper from "../services/scrapper.service";
 
 const debugLog: debug.IDebugger = debug("economist.controller");
 

@@ -39,8 +39,6 @@ export class User {
       decipher.final(),
     ]);
 
-    console.log(decrpyted);
-
     return decrpyted.toString() == password;
   }
 }

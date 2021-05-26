@@ -1,9 +1,7 @@
 import express from "express";
 import cors from "cors";
 import debug from "debug";
-import methodOverride from "method-override";
 import apiRouter from "./routes/api.routes.config";
-import { loginErrorHandler } from "./middlewares/apiErrorHandler";
 
 const app: express.Application = express();
 const port = process.env.PORT || 3000;
@@ -18,9 +16,6 @@ app.get("/", (_, res: express.Response) => {
 });
 
 app.use("/api", apiRouter());
-
-app.use(methodOverride());
-app.use(loginErrorHandler);
 
 app.listen(port, () => {
   debugLog(`Server running ar http://localhost:${port}`);
